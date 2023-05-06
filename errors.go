@@ -5,7 +5,10 @@ import (
 )
 
 var (
-	WrongWalkableType = errors.New("wrong walkable type, cannot cast to IWalkable")
+	ErrNoMatches         = errors.New("no matches found")
+	// ErrStopWalking is returned by the walk function to stop walking. And should be filtered out by the walk function.
+	ErrStopWalking       = errors.New("stop walking")
+	ErrWrongWalkableType = errors.New("wrong walkable type, cannot cast to IWalkable")
 )
 
 var _ IWalkable[int, int] = &WalkableError[int, int]{}

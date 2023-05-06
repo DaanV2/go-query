@@ -13,6 +13,7 @@ func Over[K comparable, V any](coll interface{}) *Walkable[K, V] {
 	}
 	return &Walkable[K, V]{
 		source: source,
+		matcher: nil,
 	}
 }
 
@@ -45,7 +46,7 @@ func generateSource[K comparable, V any](coll interface{}) (IWalkable[K, V], err
 		return NewWalkableMap(c), nil
 
 	default:
-		return nil, WrongWalkableType
+		return nil, ErrWrongWalkableType
 	}
 }
 
