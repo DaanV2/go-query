@@ -6,6 +6,7 @@ import (
 	"reflect"
 )
 
+// Over returns a new Walkable instance over the given collection. Might return an error if the collection is not supported.
 func Over[K comparable, V any](coll interface{}) *Walkable[K, V] {
 	source, err := generateSource[K, V](coll)
 	if err != nil {
@@ -50,12 +51,14 @@ func generateSource[K comparable, V any](coll interface{}) (IWalkable[K, V], err
 	}
 }
 
+// OverArray returns a new Walkable instance over the given array.
 func OverArray[V any](arr []V) *Walkable[int, V] {
 	return &Walkable[int, V]{
 		source: NewWalkableArray(arr),
 	}
 }
 
+// OverMap returns a new Walkable instance over the given channel.
 func OverMap[K comparable, V any](items map[K]V) *Walkable[K, V] {
 	return &Walkable[K, V]{
 		source: NewWalkableMap(items),
