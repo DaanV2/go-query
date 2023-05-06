@@ -22,3 +22,4 @@ func (w *Walkable[K, V]) And(and Matcher[K, V]) *Walkable[K, V] {
 	w.matcher = And(first, and)
 	return w
 }
+

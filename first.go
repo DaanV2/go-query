@@ -2,11 +2,11 @@ package query
 
 // First returns the first item that matches the given matcher.
 func First[K comparable, V any](col interface{}, matcher Matcher[K, V]) (K, V, error) {
-	return Over[K, V](col).First(matcher)
+	return Over[K, V](col).Filter(matcher).First()
 }
 
 // First returns the first item that matches the given matcher. or returns ErrNoMatches.
-func (w *Walkable[K, V]) First(match Matcher[K, V]) (K, V, error) {
+func (w *Walkable[K, V]) First() (K, V, error) {
 	var (
 		key   K
 		value V
@@ -14,14 +14,9 @@ func (w *Walkable[K, V]) First(match Matcher[K, V]) (K, V, error) {
 	)
 
 	_, err := w.Walk(func(item V, k K) error {
-		if match.DoesMatch(item, k) {
-			key = k
-			value = item
-			found = true
-			return ErrStopWalking
-		}
-
-		return nil
+		//If we've already found a match, stop walking.
+		found = true
+		return ErrStopWalking
 	})
 
 	if err != nil {

@@ -13,11 +13,12 @@ func Over[K comparable, V any](coll interface{}) *Walkable[K, V] {
 		source = NewWalkError[K, V](err)
 	}
 	return &Walkable[K, V]{
-		source: source,
+		source:  source,
 		matcher: nil,
 	}
 }
 
+// generateSource generates the source for the walkable from an interface.
 func generateSource[K comparable, V any](coll interface{}) (IWalkable[K, V], error) {
 	switch c := coll.(type) {
 	case IWalkable[K, V]:
@@ -55,6 +56,13 @@ func generateSource[K comparable, V any](coll interface{}) (IWalkable[K, V], err
 func OverArray[V any](arr []V) *Walkable[int, V] {
 	return &Walkable[int, V]{
 		source: NewWalkableArray(arr),
+	}
+}
+
+// OverChannel returns a new Walkable instance over the given channel.
+func OverChannel[V any](chn chan V) *Walkable[int, V] {
+	return &Walkable[int, V]{
+		source: NewWalkableChan(chn),
 	}
 }
 

@@ -1,18 +1,20 @@
 package query
 
+var _ IWalkable[int, int] = &WalkableChannel[int]{}
+
+// IWalkableChannel is a walkable channel.
 type WalkableChannel[V any] struct {
 	ch chan V
 }
 
-var _ IWalkable[int, int] = &WalkableChannel[int]{}
-
+// NewWalkableChan creates a new walkable channel.
 func NewWalkableChan[V any](ch chan V) *WalkableChannel[V] {
 	return &WalkableChannel[V]{
 		ch: ch,
 	}
 }
 
-// Walk implements IWalkable
+// Walk walks over the items in the collection.
 func (w *WalkableChannel[V]) Walk(call func(item V, key int) error) (IWalkable[int, V], error) {
 	i := 0
 	for item := range w.ch {
