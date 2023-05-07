@@ -9,7 +9,7 @@ type IWalkable[K any, V any] interface {
 // Walkable is a walkable collection.
 type Walkable[K comparable, V any] struct {
 	// source is the source of the walkable.
-	source  IWalkable[K, V]
+	source IWalkable[K, V]
 	// matcher is the matcher to use.
 	matcher Matcher[K, V]
 }
@@ -59,4 +59,20 @@ func (w *Walkable[K, V]) ToMap() (map[K]V, error) {
 	})
 
 	return items, err
+}
+
+// ToChannel converts all items in the walkable to a channel.
+func (w *Walkable[K, V]) ToChannel() (chan V, error) {
+	into := make(chan V)
+	_, err := w.IntoChannel(into)
+
+	return into, err
+}
+
+// IntoChannel converts all items in the walkable to a channel.
+func (w *Walkable[K, V]) IntoChannel(into chan V) (walker IWalkable[K, V], err error) {
+	return w.Walk(func(item V, key K) error {
+		into <- item
+		return nil
+	})
 }
