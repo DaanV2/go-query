@@ -13,8 +13,8 @@ func (m *Matcher[K, V]) Not() Matcher[K, V] {
 }
 
 // Not returns a matcher that matches if A does not match.
-func (w *Walkable[K, V]) Not(not Matcher[K, V]) *Walkable[K, V] {
+func (w *Walkable[K, V]) Not() *Walkable[K, V] {
 	first := w.matcher
-	w.matcher = Not(first)
+	w.matcher = first.Not()
 	return w
 }

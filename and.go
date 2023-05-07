@@ -19,7 +19,7 @@ func (m *Matcher[K, V]) And(and Matcher[K, V]) Matcher[K, V] {
 // And returns a matcher that matches if both A and B match.
 func (w *Walkable[K, V]) And(and Matcher[K, V]) *Walkable[K, V] {
 	first := w.matcher
-	w.matcher = And(first, and)
+	w.matcher = first.And(and)
 	return w
 }
 

@@ -56,7 +56,7 @@ func Test_Any(t *testing.T) {
 			}).Count()
 
 		require.NoError(t, err)
-		assert.Len(t, arr, amount)
+		assert.Equal(t, 0, amount)
 	})
 }
 

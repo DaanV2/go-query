@@ -17,8 +17,8 @@ func (m *Matcher[K, V]) Or(or Matcher[K, V]) Matcher[K, V] {
 }
 
 // Or returns a matcher that matches if either A or B match.
-func (w *Walkable[K, V]) Or(and Matcher[K, V]) *Walkable[K, V] {
+func (w *Walkable[K, V]) Or(or Matcher[K, V]) *Walkable[K, V] {
 	first := w.matcher
-	w.matcher = Or(first, and)
+	w.matcher = first.Or(or)
 	return w
 }

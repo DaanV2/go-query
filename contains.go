@@ -1,6 +1,6 @@
 package query
 
-
+// Contains checks if any item in the collection matches the given matcher.
 func Contains[K comparable, V any](coll interface{}, match Matcher[K, V]) (bool, error) {
 	source := Over[K, V](coll)
 	found := false
