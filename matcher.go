@@ -5,10 +5,16 @@ type Matcher[K comparable, V any] func(item V, key K) bool
 
 // DoesMatch returns the result of the matcher.
 func (m Matcher[K, V]) DoesMatch(item V, key K) bool {
-	if m == nil {
+	if m.isNil() {
 		return true
 	}
+
 	return m(item, key)
+}
+
+// isNil returns true if the matcher is nil.
+func (m Matcher[K, V]) isNil() bool {
+	return m == nil
 }
 
 // Match returns a Matcher that matches items that match the given function.

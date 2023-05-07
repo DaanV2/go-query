@@ -9,7 +9,7 @@ func Or[K comparable, V any](A, B Matcher[K, V]) Matcher[K, V] {
 
 // Or returns a matcher that matches if either A or B match.
 func (m *Matcher[K, V]) Or(or Matcher[K, V]) Matcher[K, V] {
-	if m == nil {
+	if m.isNil() {
 		return or
 	}
 

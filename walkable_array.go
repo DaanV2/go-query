@@ -18,8 +18,8 @@ func NewWalkableArray[V any](arr []V) *WalkableArray[V] {
 func (w *WalkableArray[V]) Walk(call func(item V, key int) error) (IWalkable[int, V], error) {
 	for key, item := range w.arr {
 		if err := call(item, key); err != nil {
-			return IWalkable[int, V](w), err
+			return w, err
 		}
 	}
-	return IWalkable[int, V](w), nil
+	return w, nil
 }

@@ -9,7 +9,7 @@ func And[K comparable, V any](A, B Matcher[K, V]) Matcher[K, V] {
 
 // And returns a matcher that matches if both A and B match.
 func (m *Matcher[K, V]) And(and Matcher[K, V]) Matcher[K, V] {
-	if m == nil {
+	if m.isNil() {
 		return and
 	}
 

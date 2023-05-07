@@ -18,8 +18,8 @@ func NewWalkableMap[K comparable, V any](items map[K]V) *WalkableMap[K, V] {
 func (w *WalkableMap[K, V]) Walk(call func(item V, key K) error) (IWalkable[K, V], error) {
 	for key, item := range w.items {
 		if err := call(item, key); err != nil {
-			return IWalkable[K, V](w), err
+			return w, err
 		}
 	}
-	return IWalkable[K, V](w), nil
+	return w, nil
 }
